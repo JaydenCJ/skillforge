@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1467 829" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">
+<rect width="1467" height="829" rx="10" fill="#0d1117"/>
+<rect width="1467" height="36" rx="10" fill="#161b22"/>
+<rect y="26" width="1467" height="10" fill="#161b22"/>
+<circle cx="22" cy="18" r="6" fill="#ff5f57"/>
+<circle cx="42" cy="18" r="6" fill="#febc2e"/>
+<circle cx="62" cy="18" r="6" fill="#28c840"/>
+<text x="734" y="22" text-anchor="middle" fill="#8b949e" font-size="12">skillforge — examples/commit-poet (real output)</text>
+<text x="20" y="64" xml:space="preserve"><tspan fill="#7ee787">$ </tspan><tspan fill="#e6edf3" font-weight="bold">skillforge matrix</tspan></text>
+<text x="20" y="83" xml:space="preserve" fill="#7ee787">compatibility matrix for commit-poet</text>
+<text x="20" y="121" xml:space="preserve" fill="#7ee787">client       result      errors  warnings  notes</text>
+<text x="20" y="140" xml:space="preserve" fill="#9da7b3">-----------  ----------  ------  --------  ---------------------------------------------------------------------</text>
+<text x="20" y="159" xml:space="preserve" fill="#9da7b3">Claude Code  compatible  0       0         reference implementation of the SKILL.md format</text>
+<text x="20" y="178" xml:space="preserve" fill="#9da7b3">Codex CLI    partial     0       2         adopts SKILL.md; no allowed-tools; shorter description budget</text>
+<text x="20" y="197" xml:space="preserve" fill="#9da7b3">Gemini CLI   partial     0       3         maps to extensions (gemini-extension.json); scripts not auto-executed</text>
+<text x="20" y="235" xml:space="preserve" fill="#9da7b3">Codex CLI:</text>
+<text x="20" y="254" xml:space="preserve" fill="#9da7b3">  warn  compat/description-truncated</text>
+<text x="20" y="273" xml:space="preserve" fill="#9da7b3">        description is 657 chars; Codex CLI truncates at 500 — trigger phrases past that point are lost</text>
+<text x="20" y="292" xml:space="preserve" fill="#9da7b3">  warn  compat/allowed-tools-dropped</text>
+<text x="20" y="311" xml:space="preserve" fill="#9da7b3">        `allowed-tools` is not honored by Codex CLI — the skill runs without tool restrictions there</text>
+<text x="20" y="349" xml:space="preserve" fill="#9da7b3">Gemini CLI:</text>
+<text x="20" y="368" xml:space="preserve" fill="#9da7b3">  warn  compat/description-truncated</text>
+<text x="20" y="387" xml:space="preserve" fill="#9da7b3">        description is 657 chars; Gemini CLI truncates at 256 — trigger phrases past that point are lost</text>
+<text x="20" y="406" xml:space="preserve" fill="#9da7b3">  warn  compat/allowed-tools-dropped</text>
+<text x="20" y="425" xml:space="preserve" fill="#9da7b3">        `allowed-tools` is not honored by Gemini CLI — the skill runs without tool restrictions there</text>
+<text x="20" y="444" xml:space="preserve" fill="#9da7b3">  warn  compat/scripts-unsupported</text>
+<text x="20" y="463" xml:space="preserve" fill="#9da7b3">        skill bundles scripts/ but Gemini CLI does not auto-execute bundled scripts</text>
+<text x="20" y="501" xml:space="preserve"><tspan fill="#7ee787">$ </tspan><tspan fill="#e6edf3" font-weight="bold">skillforge test</tspan></text>
+<text x="20" y="520" xml:space="preserve" fill="#7ee787">case                                                           Claude Code          Codex CLI            Gemini CLI           diff</text>
+<text x="20" y="539" xml:space="preserve" fill="#9da7b3">-------------------------------------------------------------  -------------------  -------------------  -------------------  --------</text>
+<text x="20" y="558" xml:space="preserve" fill="#9da7b3">commit message request triggers everywhere                     pass triggered@1.00  pass triggered@1.00  pass triggered@1.00  -</text>
+<text x="20" y="577" xml:space="preserve" fill="#9da7b3">unrelated question stays silent everywhere                     pass silent@0.00     pass silent@0.00     pass silent@0.00     -</text>
+<text x="20" y="596" xml:space="preserve" fill="#d2a8ff">changelog request (lost on Gemini CLI at 256 chars)            pass triggered@1.00  pass triggered@1.00  FAIL silent@0.00     DIVERGES</text>
+<text x="20" y="615" xml:space="preserve" fill="#d2a8ff">release notes request (lost past 500 chars, Claude Code only)  pass triggered@1.00  FAIL silent@0.00     FAIL silent@0.00     DIVERGES</text>
+<text x="20" y="653" xml:space="preserve" fill="#9da7b3">script cases:</text>
+<text x="20" y="672" xml:space="preserve" fill="#9da7b3">  pass bundled checker accepts a valid 5-7-5 haiku (exit 0)</text>
+<text x="20" y="691" xml:space="preserve" fill="#9da7b3">  pass bundled checker rejects a 5-6-5 poem (exit 1)</text>
+<text x="20" y="729" xml:space="preserve" fill="#e3b341">11 passed, 3 failed; 2 case(s) diverge across clients</text>
+<text x="20" y="748" xml:space="preserve" fill="#f47067">  FAIL changelog request (lost on Gemini CLI at 256 chars) [gemini-cli]: expected triggered=true, got false (score 0.00, threshold 0.3; missed: convert, changelog, into, poem)</text>
+<text x="20" y="767" xml:space="preserve" fill="#f47067">  FAIL release notes request (lost past 500 chars, Claude Code only) [codex]: expected triggered=true, got false (score 0.00, threshold 0.3; missed: draft, poetic, release, note)</text>
+<text x="20" y="786" xml:space="preserve" fill="#f47067">  FAIL release notes request (lost past 500 chars, Claude Code only) [gemini-cli]: expected triggered=true, got false (score 0.00, threshold 0.3; missed: draft, poetic, release, note)</text>
+</svg>

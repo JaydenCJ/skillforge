@@ -1,0 +1,50 @@
+# Behavior tests for commit-poet, run by `skillforge test`.
+#
+# Prompt cases simulate each client's skill-matching step against the
+# *effective* description that client actually sees (Codex truncates at 500
+# chars, Gemini CLI at 256 — see `skillforge clients`). Cases 3 and 4 are
+# expected to DIVERGE: the changelog and release-notes trigger phrases live
+# past the truncation points, so the skill silently stops firing there.
+# That is precisely the class of bug skillforge exists to catch.
+cases:
+  - name: commit message request triggers everywhere
+    prompt: "write a commit message for this diff"
+    expect:
+      triggered: true
+
+  - name: unrelated question stays silent everywhere
+    prompt: "what is the capital of France"
+    expect:
+      triggered: false
+
+  - name: changelog request (lost on Gemini CLI at 256 chars)
+    prompt: "convert this changelog into a poem cycle"
+    expect:
+      triggered: true
+
+  - name: release notes request (lost past 500 chars, Claude Code only)
+    prompt: "draft poetic release notes for the new version"
+    expect:
+      triggered: true
+
+  - name: bundled checker accepts a valid 5-7-5 haiku
+    script: scripts/check-haiku.mjs
+    stdin: |
+      empty input crash
+      guard the null before the parse
+      release ships at dawn
+    expect:
+      exit_code: 0
+      stdout_contains:
+        - "5-7-5 OK"
+
+  - name: bundled checker rejects a 5-6-5 poem
+    script: scripts/check-haiku.mjs
+    stdin: |
+      an old silent pond
+      the tests are green again
+      release ships at dawn
+    expect:
+      exit_code: 1
+      stdout_contains:
+        - "expected 5-7-5, got 5-6-5"

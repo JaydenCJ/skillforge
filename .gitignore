@@ -1,0 +1,37 @@
+# --- dependencies ---
+node_modules/
+
+# --- build outputs ---
+build/
+dist/
+out/
+.build/
+*.tsbuildinfo
+
+# --- model weights & large artifacts (never commit) ---
+models/
+*.gguf
+*.onnx
+*.safetensors
+*.mlmodelc
+*.mlpackage
+
+# --- env & secrets ---
+.env
+.env.*
+!.env.example
+
+# --- test / coverage ---
+coverage/
+.vitest/
+
+# --- caches / editor / OS ---
+.DS_Store
+.idea/
+.vscode/
+.cache/
+*.log
+npm-debug.log*
+*.local
+.tmp/
+tmp/

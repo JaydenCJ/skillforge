@@ -1,0 +1,61 @@
+{
+  "name": "skillforge",
+  "version": "0.1.0",
+  "description": "Cross-client toolchain for agent skills: scaffold, lint, behavior testing across Claude Code / Codex / Gemini CLI, semver + lockfile, and marketplace artifact staging for SKILL.md packages.",
+  "keywords": [
+    "agent-skills",
+    "skill.md",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "cli",
+    "toolchain",
+    "testing",
+    "lint",
+    "packaging"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "skillforge": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh.md",
+    "README.ja.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"require('fs').chmodSync('dist/cli.js', 0o755)\"",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "demo": "bash examples/demo.sh"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.2.7"
+  },
+  "author": "JaydenCJ",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaydenCJ/skillforge.git"
+  },
+  "homepage": "https://github.com/JaydenCJ/skillforge#readme",
+  "bugs": {
+    "url": "https://github.com/JaydenCJ/skillforge/issues"
+  }
+}
